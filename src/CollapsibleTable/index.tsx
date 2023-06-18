@@ -13,50 +13,46 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import StatusCode from "../StatusCode";
+import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 
 function createData(
     time: string,
     url: string,
     user: string,
-    payload: string,
+    payload: {} | [],
     response: {} | [],
     context: {} | [],
     method: string,
     status: number
 ) {
-    console.log(JSON.stringify(response));
+    console.log(JSON.stringify(response, null, 1));
     return {
         time,
         url,
         user,
         payload,
-        response: JSON.stringify(response),
-        context: JSON.stringify(context),
+        response,
+        context,
         method,
         status,
     };
 }
-
-// td:first-child {
-//     border-top-left-radius: 10px;
-//     border-bottom-left-radius: 10px;
-// }
-// td:last-child {
-//     border-bottom-right-radius: 10px;
-//     border-top-right-radius: 10px;
-// }
 
 function Row(props: { row: ReturnType<typeof createData> }) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
     const collapsedSize = "50px";
 
+    function handlerCopy(text: string) {
+        navigator.clipboard.writeText(text);
+    }
+
     return (
         <React.Fragment>
             <TableRow
             // sx={{ "& > *": { borderBottom: "unset" } }}
             >
-                <TableCell sx={{}} align="left">
+                <TableCell sx={{ maxWidth: "120px" }} align="left">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -65,7 +61,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.time}
                     </Collapse>
                 </TableCell>
-                <TableCell sx={{}} align="right">
+                <TableCell sx={{ maxWidth: "240px" }} align="right">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -83,13 +79,31 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.user}
                     </Collapse>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell
+                    sx={{
+                        display: "flex",
+                        flexWrap: "nowrap",
+                        alignItems: "start",
+                    }}
+                    align="left"
+                >
+                    <IconButton
+                        onClick={() => {
+                            handlerCopy(
+                                JSON.stringify(row.payload, null, "\t")
+                            );
+                        }}
+                        size="small"
+                    >
+                        <FileCopyOutlinedIcon />
+                    </IconButton>
                     <Collapse
+                        sx={{ width: "100%" }}
                         collapsedSize={collapsedSize}
                         in={open}
                         timeout="auto"
                     >
-                        {row.payload}
+                        {JSON.stringify(row.payload, null, "\t")}
                     </Collapse>
                 </TableCell>
                 <TableCell align="right">
@@ -98,7 +112,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         in={open}
                         timeout="auto"
                     >
-                        {row.response}
+                        {JSON.stringify(row.response, null, "\t")}
                     </Collapse>
                 </TableCell>
                 <TableCell align="right">
@@ -107,7 +121,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         in={open}
                         timeout="auto"
                     >
-                        {row.context}
+                        {JSON.stringify(row.context, null, "\t")}
                     </Collapse>
                 </TableCell>
                 <TableCell align="left">
@@ -162,7 +176,7 @@ const rows = [
         "01.13.2023 11:35",
         "/location/{orderId}/main/businessInfo",
         "PSkliarenko",
-        "orderId: BS00000",
+        { orderId: "BS00000" },
         {
             id: "BS00000",
             number: "0411-01.15-0",
@@ -190,7 +204,19 @@ const rows = [
         "01.13.2023 11:35",
         "/location/{orderId}/main/businessInfo",
         "PSkliarenko",
-        "orderId: BS00000",
+        {
+            address: "8.8.8.8",
+            arpPing: true,
+            count: 4294967295,
+            doNotFragment: true,
+            dscp: "123",
+            interface: "165.90.2.19",
+            interval: 5,
+            routingTable: "lala",
+            size: 65535,
+            srcAddress: "8.8.8.8",
+            ttl: 255,
+        },
         {
             id: "BS00000",
             number: "0411-01.15-0",
@@ -223,13 +249,13 @@ export default function CollapsibleTable() {
                 <TableHead>
                     <TableRowBase>
                         <TableCell>Time</TableCell>
-                        <TableCell align="right">URL</TableCell>
-                        <TableCell align="right">User</TableCell>
-                        <TableCell align="right">Payload</TableCell>
-                        <TableCell align="right">Response</TableCell>
-                        <TableCell align="right">Context</TableCell>
-                        <TableCell align="right">Method</TableCell>
-                        <TableCell align="right">Status</TableCell>
+                        <TableCell align="left">URL</TableCell>
+                        <TableCell align="left">User</TableCell>
+                        <TableCell align="left">Payload</TableCell>
+                        <TableCell align="left">Response</TableCell>
+                        <TableCell align="left">Context</TableCell>
+                        <TableCell align="left">Method</TableCell>
+                        <TableCell align="left">Status</TableCell>
                         <TableCell />
                     </TableRowBase>
                 </TableHead>

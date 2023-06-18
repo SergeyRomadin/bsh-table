@@ -16,11 +16,11 @@ export const TableRow = styled(TableRowBase)<any>(() => ({
     backgroundColor: "#eeeef9",
 
     "& td": {},
-    "& td:first-child": {
+    "& td:first-of-type": {
         borderTopLeftRadius: "10px",
         borderBottomLeftRadius: "10px",
     },
-    "& td:last-child": {
+    "& td:last-of-type": {
         borderTopRightRadius: "10px",
         borderBottomRightRadius: "10px",
         backgroundColor: "#E2E4F4",
@@ -31,4 +31,5 @@ export const TableCell = styled(TableCellBase)<any>(() => ({
     border: "none",
     padding: "10px 16px 0",
     verticalAlign: "top",
+    boxSizing: "border-box",
 }));
