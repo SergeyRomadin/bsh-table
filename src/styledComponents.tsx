@@ -6,7 +6,7 @@ import TableCellBase from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
 
 export const Table = styled(TableBase)<any>(() => ({
-    borderSpacing: "0 10px",
+    borderSpacing: "0 8px",
     borderCollapse: "separate",
     padding: "24px",
 }));
@@ -29,4 +29,6 @@ export const TableRow = styled(TableRowBase)<any>(() => ({
 
 export const TableCell = styled(TableCellBase)<any>(() => ({
     border: "none",
+    padding: "10px 16px 0",
+    verticalAlign: "top",
 }));

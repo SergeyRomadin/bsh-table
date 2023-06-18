@@ -12,6 +12,7 @@ import TableRowBase from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import StatusCode from "../StatusCode";
 
 function createData(
     time: string,
@@ -23,6 +24,7 @@ function createData(
     method: string,
     status: number
 ) {
+    console.log(JSON.stringify(response));
     return {
         time,
         url,
@@ -47,14 +49,14 @@ function createData(
 function Row(props: { row: ReturnType<typeof createData> }) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-    const collapsedSize = "60px";
+    const collapsedSize = "50px";
 
     return (
         <React.Fragment>
             <TableRow
             // sx={{ "& > *": { borderBottom: "unset" } }}
             >
-                <TableCell padding="none" align="right">
+                <TableCell sx={{}} align="left">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -63,7 +65,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.time}
                     </Collapse>
                 </TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell sx={{}} align="right">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -72,7 +74,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.url}
                     </Collapse>
                 </TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell align="right">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -81,7 +83,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.user}
                     </Collapse>
                 </TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell align="right">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -90,7 +92,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.payload}
                     </Collapse>
                 </TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell align="right">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -99,7 +101,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.response}
                     </Collapse>
                 </TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell align="right">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -108,7 +110,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.context}
                     </Collapse>
                 </TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell align="left">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
@@ -117,16 +119,16 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {row.method}
                     </Collapse>
                 </TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell align="right">
                     <Collapse
                         collapsedSize={collapsedSize}
                         in={open}
                         timeout="auto"
                     >
-                        <Box>{row.status}</Box>
+                        <StatusCode statusCode={row.status} />
                     </Collapse>
                 </TableCell>
-                <TableCell padding="none">
+                <TableCell sx={{ verticalAlign: "middle", padding: 0 }}>
                     <Collapse
                         sx={{
                             display: "flex",
@@ -210,7 +212,7 @@ const rows = [
             deviceName: "KFC-MSK-Zoo-Fortigate_BS00000",
         },
         "GET",
-        201
+        307
     ),
 ];
 
