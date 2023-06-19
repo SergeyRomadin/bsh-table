@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./App";
 import "./index.css";
+import "@fontsource/inter";
 import EnhancedTable from "./EnhancedTable";
 import CollapsibleTable from "./CollapsibleTable";
 

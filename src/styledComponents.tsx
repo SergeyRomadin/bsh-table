@@ -9,11 +9,13 @@ export const Table = styled(TableBase)<any>(() => ({
     borderSpacing: "0 8px",
     borderCollapse: "separate",
     padding: "24px",
+    fontFamily: "Inter",
 }));
 
 export const TableRow = styled(TableRowBase)<any>(() => ({
     borderRadius: "20px",
     backgroundColor: "#eeeef9",
+    fontFamily: "Inter",
 
     "& td": {},
     "& td:first-of-type": {
@@ -28,6 +30,7 @@ export const TableRow = styled(TableRowBase)<any>(() => ({
 }));
 
 export const TableCell = styled(TableCellBase)<any>(() => ({
+    fontFamily: "Inter",
     border: "none",
     padding: "0 16px",
     verticalAlign: "top",
