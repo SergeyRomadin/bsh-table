@@ -17,6 +17,8 @@ import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import { TelegramIcon } from "../icons/TelegramIcon";
 import styles from "./CollapsibleTable.module.css";
 import { Link } from "@mui/material";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import { visuallyHidden } from "@mui/utils";
 
 function createData(
     time: string,
@@ -41,15 +43,165 @@ function createData(
     };
 }
 
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+    if (b[orderBy] < a[orderBy]) {
+        return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+        return 1;
+    }
+    return 0;
+}
+
+type Order = "asc" | "desc";
+
+function getComparator<Key extends keyof any>(
+    order: Order,
+    orderBy: Key
+): (
+    a: { [key in Key]: number | string },
+    b: { [key in Key]: number | string }
+) => number {
+    return order === "desc"
+        ? (a, b) => descendingComparator(a, b, orderBy)
+        : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
+// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
+// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
+// with exampleArray.slice().sort(exampleComparator)
+function stableSort<T>(
+    array: readonly T[],
+    comparator: (a: T, b: T) => number
+) {
+    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+    stabilizedThis.sort((a, b) => {
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) {
+            return order;
+        }
+        return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+}
+
+interface HeadCell {
+    disablePadding: boolean;
+    id: keyof ReturnType<typeof createData>;
+    label: string;
+    numeric: boolean;
+}
+
+const headCells: readonly HeadCell[] = [
+    {
+        id: "time",
+        numeric: true,
+        disablePadding: false,
+        label: "Time",
+    },
+    {
+        id: "url",
+        numeric: false,
+        disablePadding: false,
+        label: "URL",
+    },
+    {
+        id: "user",
+        numeric: false,
+        disablePadding: false,
+        label: "User",
+    },
+    {
+        id: "payload",
+        numeric: false,
+        disablePadding: false,
+        label: "Payload",
+    },
+    {
+        id: "response",
+        numeric: false,
+        disablePadding: false,
+        label: "Response",
+    },
+    {
+        id: "context",
+        numeric: false,
+        disablePadding: false,
+        label: "Context",
+    },
+    {
+        id: "method",
+        numeric: false,
+        disablePadding: false,
+        label: "Method",
+    },
+    {
+        id: "status",
+        numeric: true,
+        disablePadding: false,
+        label: "Status",
+    },
+];
+
 const copyIconStyle = {
     height: "22px",
     width: "19px",
     color: "#3C3D46",
 };
 
+interface CollapsedTableProps {
+    onRequestSort: (
+        event: React.MouseEvent<unknown>,
+        property: keyof ReturnType<typeof createData>
+    ) => void;
+    order: Order;
+    orderBy: string;
+}
+
+function CollapsedTableHead(props: CollapsedTableProps) {
+    const { order, orderBy, onRequestSort } = props;
+    const createSortHandler =
+        (property: keyof ReturnType<typeof createData>) =>
+        (event: React.MouseEvent<unknown>) => {
+            onRequestSort(event, property);
+        };
+
+    return (
+        <TableHead>
+            <TableRowBase>
+                {headCells.map((headCell) => (
+                    <TableCell
+                        key={headCell.id}
+                        align="left"
+                        sortDirection={orderBy === headCell.id ? order : false}
+                    >
+                        <TableSortLabel
+                            active={orderBy === headCell.id}
+                            direction={orderBy === headCell.id ? order : "asc"}
+                            onClick={createSortHandler(headCell.id)}
+                        >
+                            {headCell.label}
+                            {orderBy === headCell.id ? (
+                                <Box component="span" sx={visuallyHidden}>
+                                    {order === "desc"
+                                        ? "sorted descending"
+                                        : "sorted ascending"}
+                                </Box>
+                            ) : null}
+                        </TableSortLabel>
+                    </TableCell>
+                ))}
+                <TableCell></TableCell>
+            </TableRowBase>
+        </TableHead>
+    );
+}
+
 function Row(props: { row: ReturnType<typeof createData> }) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+
     const collapsedSize = "40px";
 
     const paddingBott = open ? "" : styles.pb0;
@@ -229,9 +381,9 @@ const rows = [
         200
     ),
     createData(
-        "01.13.2023 11:35",
+        "01.13.2023 11:25",
         "/location/{orderId}/main/businessInfo",
-        "PSkliarenko",
+        "Valeron",
         {
             address: "8.8.8.8",
             arpPing: true,
@@ -246,7 +398,7 @@ const rows = [
             ttl: 255,
         },
         {
-            id: "BS00000",
+            id: "BS000123",
             number: "0411-01.15-0",
             contractNumber: "IRB/2-2/17",
             contractorOrderId: "00000",
@@ -261,36 +413,90 @@ const rows = [
             bandwidth: "10M",
         },
         {
-            orderId: "BS00000",
+            orderId: "BS000123",
             locationName: "KFC Тестовый Стенд 1 Москва",
             deviceName: "KFC-MSK-Zoo-Fortigate_BS00000",
         },
-        "GET",
+        "POST",
         307
+    ),
+    createData(
+        "01.13.2023 12:25",
+        "/location/{orderId}/main/business",
+        "Sergio",
+        {
+            address: "8.8.8.9",
+            arpPing: true,
+            count: 4294967295,
+            doNotFragment: true,
+            dscp: "123",
+            interface: "165.90.2.19",
+            interval: 5,
+            routingTable: "lala",
+            size: 65535,
+            srcAddress: "8.8.8.8",
+            ttl: 255,
+        },
+        {
+            id: "BS000126",
+            number: "0411-01.15-0",
+            contractNumber: "IRB/2-2/17",
+            contractorOrderId: "00000",
+            startDate: "2015-01-01",
+            endDate: null,
+            contractor: {
+                id: "96a701ec-0c41-2be4-5532-5a796fa1cc2c",
+                name: "Интернэшнл Ресторант Брэндс / ИРБ",
+            },
+            monitoringSystems: ["Zabbix IRB"],
+            providers: ["Сенсорные системы", "MTS"],
+            bandwidth: "10M",
+        },
+        {
+            orderId: "BS000125",
+            locationName: "KFC Тестовый Стенд 1 Москва",
+            deviceName: "KFC-MSK-Zoo-Fortigate_BS00000",
+        },
+        "POST",
+        404
     ),
 ];
 
 export default function CollapsibleTable() {
+    const [order, setOrder] = React.useState<Order>("asc");
+    const [orderBy, setOrderBy] =
+        React.useState<keyof ReturnType<typeof createData>>("time");
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const handleRequestSort = (
+        event: React.MouseEvent<unknown>,
+        property: keyof ReturnType<typeof createData>
+    ) => {
+        const isAsc = orderBy === property && order === "asc";
+        setOrder(isAsc ? "desc" : "asc");
+        setOrderBy(property);
+    };
+    const visibleRows = React.useMemo(
+        () =>
+            stableSort(rows, getComparator(order, orderBy)).slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+            ),
+        [order, orderBy, page, rowsPerPage]
+    );
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
-                <TableHead>
-                    <TableRowBase>
-                        <TableCell>Time</TableCell>
-                        <TableCell align="left">URL</TableCell>
-                        <TableCell align="left">User</TableCell>
-                        <TableCell align="left">Payload</TableCell>
-                        <TableCell align="left">Response</TableCell>
-                        <TableCell align="left">Context</TableCell>
-                        <TableCell align="left">Method</TableCell>
-                        <TableCell align="left">Status</TableCell>
-                        <TableCell />
-                    </TableRowBase>
-                </TableHead>
+                <CollapsedTableHead
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                />
                 <TableBody>
-                    {rows.map((row) => (
-                        <Row key={row.time} row={row} />
-                    ))}
+                    {visibleRows.map((row, index) => {
+                        return <Row key={index} row={row} />;
+                    })}
                 </TableBody>
             </Table>
         </TableContainer>
