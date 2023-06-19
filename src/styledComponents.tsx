@@ -29,7 +29,7 @@ export const TableRow = styled(TableRowBase)<any>(() => ({
 
 export const TableCell = styled(TableCellBase)<any>(() => ({
     border: "none",
-    padding: "10px 16px 0",
+    padding: "0 16px",
     verticalAlign: "top",
     boxSizing: "border-box",
 }));

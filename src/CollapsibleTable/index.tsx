@@ -14,6 +14,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import StatusCode from "../StatusCode";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import styles from "./CollapsibleTable.module.css";
+import { Link } from "@mui/material";
 
 function createData(
     time: string,
@@ -30,18 +33,26 @@ function createData(
         time,
         url,
         user,
-        payload,
-        response,
-        context,
+        payload: JSON.stringify(payload, null, "\t"),
+        response: JSON.stringify(response, null, "\t"),
+        context: JSON.stringify(context, null, "\t"),
         method,
         status,
     };
 }
 
+const copyIconStyle = {
+    height: "22px",
+    width: "19px",
+    color: "#3C3D46",
+};
+
 function Row(props: { row: ReturnType<typeof createData> }) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-    const collapsedSize = "50px";
+    const collapsedSize = "40px";
+
+    const paddingBott = open ? "" : styles.pb0;
 
     function handlerCopy(text: string) {
         navigator.clipboard.writeText(text);
@@ -49,98 +60,121 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 
     return (
         <React.Fragment>
-            <TableRow
-            // sx={{ "& > *": { borderBottom: "unset" } }}
-            >
+            <TableRow>
                 <TableCell sx={{ maxWidth: "120px" }} align="left">
-                    <Collapse
-                        collapsedSize={collapsedSize}
-                        in={open}
-                        timeout="auto"
-                    >
-                        {row.time}
-                    </Collapse>
+                    <div className={styles.centerColumn}>{row.time}</div>
                 </TableCell>
-                <TableCell sx={{ maxWidth: "240px" }} align="right">
-                    <Collapse
-                        collapsedSize={collapsedSize}
-                        in={open}
-                        timeout="auto"
+                <TableCell sx={{ maxWidth: "240px" }} align="left">
+                    <div
+                        className={styles.centerColumn + " " + styles.urlColumn}
                     >
                         {row.url}
-                    </Collapse>
+                    </div>
                 </TableCell>
                 <TableCell align="right">
-                    <Collapse
-                        collapsedSize={collapsedSize}
-                        in={open}
-                        timeout="auto"
-                    >
-                        {row.user}
-                    </Collapse>
-                </TableCell>
-                <TableCell
-                    sx={{
-                        display: "flex",
-                        flexWrap: "nowrap",
-                        alignItems: "start",
-                    }}
-                    align="left"
-                >
-                    <IconButton
-                        onClick={() => {
-                            handlerCopy(
-                                JSON.stringify(row.payload, null, "\t")
-                            );
-                        }}
-                        size="small"
-                    >
-                        <FileCopyOutlinedIcon />
-                    </IconButton>
-                    <Collapse
-                        sx={{ width: "100%" }}
-                        collapsedSize={collapsedSize}
-                        in={open}
-                        timeout="auto"
-                    >
-                        {JSON.stringify(row.payload, null, "\t")}
-                    </Collapse>
-                </TableCell>
-                <TableCell align="right">
-                    <Collapse
-                        collapsedSize={collapsedSize}
-                        in={open}
-                        timeout="auto"
-                    >
-                        {JSON.stringify(row.response, null, "\t")}
-                    </Collapse>
-                </TableCell>
-                <TableCell align="right">
-                    <Collapse
-                        collapsedSize={collapsedSize}
-                        in={open}
-                        timeout="auto"
-                    >
-                        {JSON.stringify(row.context, null, "\t")}
-                    </Collapse>
+                    <div className={styles.cellContainer}>
+                        <div className={styles.leftColumn}>
+                            <Link
+                                sx={{
+                                    borderRadius: "50%",
+                                    backgroundColor: "#40A7E3",
+                                    width: "22px",
+                                    height: "22px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                href="#"
+                            >
+                                <TelegramIcon
+                                    fontSize="inherit"
+                                    sx={{ color: "#fff" }}
+                                />
+                            </Link>
+                        </div>
+                        <div className={styles.rightColumn}>{row.user}</div>
+                    </div>
                 </TableCell>
                 <TableCell align="left">
-                    <Collapse
-                        collapsedSize={collapsedSize}
-                        in={open}
-                        timeout="auto"
-                    >
-                        {row.method}
-                    </Collapse>
+                    <div className={styles.cellContainer + " " + paddingBott}>
+                        <div className={styles.leftColumn}>
+                            <IconButton
+                                onClick={() => {
+                                    handlerCopy(row.payload);
+                                }}
+                                size="small"
+                            >
+                                <FileCopyOutlinedIcon sx={copyIconStyle} />
+                            </IconButton>
+                        </div>
+                        <div className={styles.rightColumn}>
+                            <Collapse
+                                className={styles.tableCollapse}
+                                sx={{ width: "100%" }}
+                                collapsedSize={open ? collapsedSize : 50}
+                                in={open}
+                                timeout="auto"
+                            >
+                                {row.payload}
+                            </Collapse>
+                        </div>
+                    </div>
+                </TableCell>
+                <TableCell align="left">
+                    <div className={styles.cellContainer + " " + paddingBott}>
+                        <div className={styles.leftColumn}>
+                            <IconButton
+                                onClick={() => {
+                                    handlerCopy(row.response);
+                                }}
+                                size="small"
+                            >
+                                <FileCopyOutlinedIcon sx={copyIconStyle} />
+                            </IconButton>
+                        </div>
+                        <div className={styles.rightColumn}>
+                            <Collapse
+                                className={styles.tableCollapse}
+                                collapsedSize={open ? collapsedSize : 50}
+                                in={open}
+                                timeout="auto"
+                            >
+                                {row.response}
+                            </Collapse>
+                        </div>
+                    </div>
+                </TableCell>
+                <TableCell align="left">
+                    <div className={styles.cellContainer + " " + paddingBott}>
+                        <div className={styles.leftColumn}>
+                            <IconButton
+                                onClick={() => {
+                                    handlerCopy(row.context);
+                                }}
+                                size="small"
+                            >
+                                <FileCopyOutlinedIcon sx={copyIconStyle} />
+                            </IconButton>
+                        </div>
+                        <div className={styles.rightColumn}>
+                            <Collapse
+                                className={styles.tableCollapse}
+                                collapsedSize={open ? collapsedSize : 50}
+                                in={open}
+                                timeout="auto"
+                            >
+                                {row.context}
+                            </Collapse>
+                        </div>
+                    </div>
+                </TableCell>
+                <TableCell align="left">
+                    <div className={styles.centerColumn}>{row.method}</div>
                 </TableCell>
                 <TableCell align="right">
-                    <Collapse
-                        collapsedSize={collapsedSize}
-                        in={open}
-                        timeout="auto"
-                    >
+                    <div className={styles.centerColumn}>
                         <StatusCode statusCode={row.status} />
-                    </Collapse>
+                    </div>
                 </TableCell>
                 <TableCell sx={{ verticalAlign: "middle", padding: 0 }}>
                     <Collapse

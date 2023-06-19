@@ -1,12 +1,41 @@
-.collapseBtn {
+.cellContainer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: start;
 }
 
-.table {
+.pb0 {
+    padding-bottom: 0;
 }
 
 .tableCollapse {
+    padding-left: 8px;
 }
-.tableRow {
+
+.urlColumn {
+    width: 208px;
+    word-break: break-all;
+}
+
+.centerColumn {
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+}
+.leftColumn {
+    padding-left: 2px;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+}
+
+.rightColumn {
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
 }
 
 .collapse {
