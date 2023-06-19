@@ -14,7 +14,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import StatusCode from "../StatusCode";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
-import TelegramIcon from "@mui/icons-material/Telegram";
+import { TelegramIcon } from "../icons/TelegramIcon";
 import styles from "./CollapsibleTable.module.css";
 import { Link } from "@mui/material";
 
@@ -77,19 +77,13 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                             <Link
                                 sx={{
                                     borderRadius: "50%",
-                                    backgroundColor: "#40A7E3",
                                     width: "22px",
                                     height: "22px",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
+                                    display: "block",
                                 }}
                                 href="#"
                             >
-                                <TelegramIcon
-                                    fontSize="inherit"
-                                    sx={{ color: "#fff" }}
-                                />
+                                <TelegramIcon />
                             </Link>
                         </div>
                         <div className={styles.rightColumn}>{row.user}</div>
