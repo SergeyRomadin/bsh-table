@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./StatusCode.module.css";
 import { Box } from "@mui/material";
 
 export default function StatusCode(props: { statusCode: number }) {

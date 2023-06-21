@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Table } from "../../styledComponents";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
-import { stableSort, getComparator } from "../../utils/utils";
-import { TOrder, TKeyofMockData } from "../../utils/types";
+import { sortedRows } from "../../utils/utils";
+import { TOrder, TKeyofMockData, TMockData } from "../../utils/types";
 import { ROWS } from "../../utils/constants";
 import CollapsedTableHead from "../CollapsedTableHead";
 import Row from "../CollapsedTableRow";
@@ -14,21 +14,17 @@ export default function CollapsibleTable() {
     const [orderBy, setOrderBy] = useState<TKeyofMockData>("time");
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const handleRequestSort = (
-        event: React.MouseEvent<unknown>,
-        property: TKeyofMockData
-    ) => {
-        const isAsc = orderBy === property && order === "asc";
-        setOrder(isAsc ? "desc" : "asc");
-        setOrderBy(property);
-    };
+    const handleRequestSort = useCallback(
+        (property: TKeyofMockData) => {
+            const isAsc = orderBy === property && order === "asc";
+            setOrder(isAsc ? "desc" : "asc");
+            setOrderBy(property);
+        },
+        [orderBy, order]
+    );
 
-    const visibleRows = React.useMemo(
-        () =>
-            stableSort(ROWS, getComparator(order, orderBy)).slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-            ),
+    const visibleRows: Array<TMockData> = React.useMemo(
+        () => sortedRows(ROWS, order, orderBy, page, rowsPerPage),
         [order, orderBy, page, rowsPerPage]
     );
 

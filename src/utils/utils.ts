@@ -49,11 +49,14 @@ export const visibleRows = (
         page * rowsPerPage + rowsPerPage
     );
 
-// const visibleRows = React.useMemo(
-//     () =>
-//         stableSort(ROWS, getComparator(order, orderBy)).slice(
-//             page * rowsPerPage,
-//             page * rowsPerPage + rowsPerPage
-//         ),
-//     [order, orderBy, page, rowsPerPage]
-// );
+export const sortedRows = (
+    rows: TMockData[],
+    order: TOrder,
+    orderBy: TKeyofMockData,
+    page: number,
+    rowsPerPage: number
+): TMockData[] =>
+    stableSort(rows, getComparator(order, orderBy)).slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+    );

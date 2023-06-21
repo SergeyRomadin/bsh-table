@@ -14,10 +14,7 @@ export interface IHeadCell {
 }
 
 export interface ICollapsedTableProps {
-    onRequestSort: (
-        event: React.MouseEvent<unknown>,
-        property: TKeyofMockData
-    ) => void;
+    onRequestSort: (property: TKeyofMockData) => void;
     order: TOrder;
     orderBy: string;
 }

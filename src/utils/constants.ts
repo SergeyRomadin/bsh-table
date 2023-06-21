@@ -1,7 +1,7 @@
-import { IHeadCell } from "./types";
+import { IHeadCell, TMockData } from "./types";
 import { createData } from "../mock/utils";
 
-export const ROWS = [
+export const ROWS: any = [
     createData(
         "01.13.2023 11:35",
         "/location/{orderId}/main/businessInfo",
