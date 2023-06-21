@@ -6,7 +6,7 @@ import App from "./App";
 import "./index.css";
 import "@fontsource/inter";
 import EnhancedTable from "./EnhancedTable";
-import CollapsibleTable from "./CollapsibleTable";
+import CollapsibleTable from "./modules/CollapsibleTable";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
