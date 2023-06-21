@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ICollapsedTableProps, TKeyofMockData } from "../../utils/types";
 import { HEAD_CELLS } from "../../utils/constants";
 import TableHead from "@mui/material/TableHead";

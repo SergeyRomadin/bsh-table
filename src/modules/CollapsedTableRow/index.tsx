@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -7,14 +7,13 @@ import { TableRow } from "../../styledComponents";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import StatusCode from "../StatusCode";
-import { TelegramIcon } from "../../icons/TelegramIcon";
-import { Link } from "@mui/material";
+import TelegramIconLink from "../TelegramIconLink";
 import CopyIconBtn from "../CopyIconBtn";
 import { TMockData } from "../../utils/types";
 
 export default function CollapsedTableRow(props: { row: TMockData }) {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const styleSX = {
         cellContainer: {
@@ -80,17 +79,7 @@ export default function CollapsedTableRow(props: { row: TMockData }) {
                 <TableCell align="right">
                     <Box sx={styleSX.cellContainer}>
                         <Box sx={styleSX.leftColumn}>
-                            <Link
-                                sx={{
-                                    borderRadius: "50%",
-                                    width: "22px",
-                                    height: "22px",
-                                    display: "block",
-                                }}
-                                href="#"
-                            >
-                                <TelegramIcon />
-                            </Link>
+                            <TelegramIconLink />
                         </Box>
                         <Box sx={styleSX.rightColumn}>{row.user}</Box>
                     </Box>

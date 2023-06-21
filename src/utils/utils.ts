@@ -1,4 +1,4 @@
-import { TOrder } from "./types";
+import { TOrder, TKeyofMockData, TMockData } from "./types";
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -36,3 +36,24 @@ export function stableSort<T>(
     });
     return stabilizedThis.map((el) => el[0]);
 }
+
+export const visibleRows = (
+    rows: [],
+    order: TOrder,
+    orderBy: TOrder,
+    page: number,
+    rowsPerPage: number
+) =>
+    stableSort(rows, getComparator(order, orderBy)).slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+    );
+
+// const visibleRows = React.useMemo(
+//     () =>
+//         stableSort(ROWS, getComparator(order, orderBy)).slice(
+//             page * rowsPerPage,
+//             page * rowsPerPage + rowsPerPage
+//         ),
+//     [order, orderBy, page, rowsPerPage]
+// );
