@@ -15,7 +15,11 @@ function HeadCell(props: any) {
     }, [id, onRequestSort]);
 
     return (
-        <TableCell align="left" sortDirection={orderBy === id ? order : false}>
+        <TableCell
+            align="left"
+            sortDirection={orderBy === id ? order : false}
+            sx={{ border: "none", padding: "0 16px 0" }}
+        >
             <TableSortLabel
                 active={orderBy === id}
                 direction={orderBy === id ? order : "asc"}

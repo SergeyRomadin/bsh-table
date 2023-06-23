@@ -8,6 +8,7 @@ import { TOrder, TKeyofMockData, TMockData } from "../../utils/types";
 import { ROWS } from "../../utils/constants";
 import CollapsedTableHead from "../CollapsedTableHead";
 import Row from "../CollapsedTableRow";
+import CollapsedToolbar from "../CollapsedToolbar";
 
 export default function CollapsibleTable() {
     const [order, setOrder] = useState<TOrder>("asc");
@@ -30,6 +31,7 @@ export default function CollapsibleTable() {
 
     return (
         <TableContainer component={Paper}>
+            <CollapsedToolbar numSelected={0} />
             <Table aria-label="collapsible table">
                 <CollapsedTableHead
                     order={order}
