@@ -1,0 +1,34 @@
+{
+    "actions": [
+        {
+            "time": "01.13.2023 11:35",
+            "url": "/location/{orderId}/main/businessInfo",
+            "user": "PSkliarenko",
+            "payload": "{\n\t\"orderId\": \"BS00000\"\n}",
+            "response": "{\n\t\"id\": \"BS00000\",\n\t\"number\": \"0411-01.15-0\",\n\t\"contractNumber\": \"IRB/2-2/17\",\n\t\"contractorOrderId\": \"00000\",\n\t\"startDate\": \"2015-01-01\",\n\t\"endDate\": null,\n\t\"contractor\": {\n\t\t\"id\": \"96a701ec-0c41-2be4-5532-5a796fa1cc2c\",\n\t\t\"name\": \"Интернэшнл Ресторант Брэндс / ИРБ\"\n\t},\n\t\"monitoringSystems\": [\n\t\t\"Zabbix IRB\"\n\t],\n\t\"providers\": [\n\t\t\"Сенсорные системы\",\n\t\t\"MTS\"\n\t],\n\t\"bandwidth\": \"10M\"\n}",
+            "context": "{\n\t\"orderId\": \"BS00000\",\n\t\"locationName\": \"KFC Тестовый Стенд 1 Москва\",\n\t\"deviceName\": \"KFC-MSK-Zoo-Fortigate_BS00000\"\n}",
+            "method": "GET",
+            "status": 200
+        },
+        {
+            "time": "01.13.2023 11:25",
+            "url": "/location/{orderId}/main/businessInfo",
+            "user": "Valeron",
+            "payload": "{\n\t\"address\": \"8.8.8.8\",\n\t\"arpPing\": true,\n\t\"count\": 4294967295,\n\t\"doNotFragment\": true,\n\t\"dscp\": \"123\",\n\t\"interface\": \"165.90.2.19\",\n\t\"interval\": 5,\n\t\"routingTable\": \"lala\",\n\t\"size\": 65535,\n\t\"srcAddress\": \"8.8.8.8\",\n\t\"ttl\": 255\n}",
+            "response": "{\n\t\"id\": \"BS000123\",\n\t\"number\": \"0411-01.15-0\",\n\t\"contractNumber\": \"IRB/2-2/17\",\n\t\"contractorOrderId\": \"00000\",\n\t\"startDate\": \"2015-01-01\",\n\t\"endDate\": null,\n\t\"contractor\": {\n\t\t\"id\": \"96a701ec-0c41-2be4-5532-5a796fa1cc2c\",\n\t\t\"name\": \"Интернэшнл Ресторант Брэндс / ИРБ\"\n\t},\n\t\"monitoringSystems\": [\n\t\t\"Zabbix IRB\"\n\t],\n\t\"providers\": [\n\t\t\"Сенсорные системы\",\n\t\t\"MTS\"\n\t],\n\t\"bandwidth\": \"10M\"\n}",
+            "context": "{\n\t\"orderId\": \"BS000123\",\n\t\"locationName\": \"KFC Тестовый Стенд 1 Москва\",\n\t\"deviceName\": \"KFC-MSK-Zoo-Fortigate_BS00000\"\n}",
+            "method": "POST",
+            "status": 307
+        },
+        {
+            "time": "01.13.2023 12:25",
+            "url": "/location/{orderId}/main/business",
+            "user": "Sergio",
+            "payload": "{\n\t\"address\": \"8.8.8.9\",\n\t\"arpPing\": true,\n\t\"count\": 4294967295,\n\t\"doNotFragment\": true,\n\t\"dscp\": \"123\",\n\t\"interface\": \"165.90.2.19\",\n\t\"interval\": 5,\n\t\"routingTable\": \"lala\",\n\t\"size\": 65535,\n\t\"srcAddress\": \"8.8.8.8\",\n\t\"ttl\": 255\n}",
+            "response": "{\n\t\"id\": \"BS000126\",\n\t\"number\": \"0411-01.15-0\",\n\t\"contractNumber\": \"IRB/2-2/17\",\n\t\"contractorOrderId\": \"00000\",\n\t\"startDate\": \"2015-01-01\",\n\t\"endDate\": null,\n\t\"contractor\": {\n\t\t\"id\": \"96a701ec-0c41-2be4-5532-5a796fa1cc2c\",\n\t\t\"name\": \"Интернэшнл Ресторант Брэндс / ИРБ\"\n\t},\n\t\"monitoringSystems\": [\n\t\t\"Zabbix IRB\"\n\t],\n\t\"providers\": [\n\t\t\"Сенсорные системы\",\n\t\t\"MTS\"\n\t],\n\t\"bandwidth\": \"10M\"\n}",
+            "context": "{\n\t\"orderId\": \"BS000125\",\n\t\"locationName\": \"KFC Тестовый Стенд 1 Москва\",\n\t\"deviceName\": \"KFC-MSK-Zoo-Fortigate_BS00000\"\n}",
+            "method": "POST",
+            "status": 404
+        }
+    ]
+}

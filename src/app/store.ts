@@ -1,10 +1,14 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
 import auditOfActionsReducer from "../features/Redux/auditOfActionsSlice";
+import { actionsApi } from "../features/Redux/services/actionsApi";
 
 export const store = configureStore({
     reducer: {
         auditOfActions: auditOfActionsReducer,
+        [actionsApi.reducerPath]: actionsApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(actionsApi.middleware);
     },
 });
 

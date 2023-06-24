@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { Table } from "../../styledComponents";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -11,10 +11,11 @@ import Row from "../CollapsedTableRow";
 import CollapsedToolbar from "../CollapsedToolbar";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
-    setFilteredActionsList,
     selectAuditOfActions,
+    setActionsList,
 } from "../../features/Redux/auditOfActionsSlice";
 import { useSelector } from "react-redux";
+import { actionsApi } from "../../features/Redux/services/actionsApi";
 
 export default function CollapsibleTable() {
     const [order, setOrder] = useState<TOrder>("asc");
@@ -29,6 +30,7 @@ export default function CollapsibleTable() {
         },
         [orderBy, order]
     );
+    const { data } = actionsApi.useFetchActionsListQuery("");
     const dispatch = useAppDispatch();
     const auditOfActionsState = useSelector(selectAuditOfActions);
     const {
@@ -37,9 +39,18 @@ export default function CollapsibleTable() {
         methodFilterValue,
         searchFilterValue,
         statusFilterValue,
+        actionsList,
     } = auditOfActionsState;
 
+    useEffect(() => {
+        console.log(data);
+        dispatch(setActionsList(data));
+    }, [data]);
+
     const filteredRows: Array<TMockData> | null = useMemo(() => {
+        if (!filteredActionsList || filteredActionsList.length === 0) {
+            return null;
+        }
         return filteredActionsList(auditOfActionsState);
     }, [
         urlFilterValue,
@@ -47,12 +58,15 @@ export default function CollapsibleTable() {
         methodFilterValue,
         searchFilterValue,
         statusFilterValue,
+        actionsList,
     ]);
 
-    const visibleRows: Array<TMockData> = React.useMemo(
-        () => sortedRows(filteredRows, order, orderBy, page, rowsPerPage),
-        [filteredRows, order, orderBy, page, rowsPerPage]
-    );
+    const visibleRows: Array<TMockData> | null = React.useMemo(() => {
+        if (!filteredRows || filteredRows.length === 0) {
+            return null;
+        }
+        return sortedRows(filteredRows, order, orderBy, page, rowsPerPage);
+    }, [filteredRows, order, orderBy, page, rowsPerPage, actionsList]);
 
     return (
         <TableContainer
@@ -67,9 +81,11 @@ export default function CollapsibleTable() {
                     onRequestSort={handleRequestSort}
                 />
                 <TableBody>
-                    {visibleRows.map((row, index) => {
-                        return <Row key={index} row={row} />;
-                    })}
+                    {!visibleRows
+                        ? null
+                        : visibleRows.map((row, index) => {
+                              return <Row key={index} row={row} />;
+                          })}
                 </TableBody>
             </Table>
         </TableContainer>

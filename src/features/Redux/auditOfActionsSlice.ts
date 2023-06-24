@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../app/store";
-import { fetchCount } from "../counter/counterAPI";
 import { TKeyofMockData, TMockData } from "../../utils/types";
 import { ROWS } from "../../utils/constants";
 
@@ -15,7 +14,7 @@ export interface IAuditOfActionsState {
 }
 
 const initialState: IAuditOfActionsState = {
-    actionsList: ROWS,
+    actionsList: [],
     searchFilterValue: "",
     urlFilterValue: "",
     userFilterValue: "",
@@ -29,6 +28,10 @@ export const auditOfActionsSlice = createSlice({
     initialState,
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
+        setActionsList: (state, action) => {
+            state.actionsList = action.payload;
+        },
+
         setSearchFilterValue: (state, action) => {
             state.searchFilterValue = action.payload;
         },
@@ -48,56 +51,6 @@ export const auditOfActionsSlice = createSlice({
         setStatusFilterValue: (state, action) => {
             state.statusFilterValue = action.payload;
         },
-
-        setFilteredActionsList: (state) => {
-            state.filteredActionsList = state.actionsList.filter((item) => {
-                const {
-                    urlFilterValue,
-                    userFilterValue,
-                    methodFilterValue,
-                    searchFilterValue,
-                    statusFilterValue,
-                } = state;
-
-                const search = (el: TMockData) => {
-                    let key: TKeyofMockData;
-                    for (key in el) {
-                        if (
-                            el[key]
-                                .toString()
-                                .toLowerCase()
-                                .includes(
-                                    searchFilterValue.toString().toLowerCase()
-                                )
-                        ) {
-                            return true;
-                        }
-                    }
-                };
-
-                if (urlFilterValue && urlFilterValue !== item.url) {
-                    return false;
-                }
-
-                if (userFilterValue && userFilterValue !== item.user) {
-                    return false;
-                }
-
-                if (methodFilterValue && methodFilterValue !== item.method) {
-                    return false;
-                }
-
-                if (statusFilterValue && statusFilterValue !== item.status) {
-                    return false;
-                }
-
-                if (searchFilterValue && !search(item)) {
-                    return false;
-                }
-
-                return true;
-            });
-        },
     },
 });
 
@@ -107,7 +60,7 @@ export const {
     setStatusFilterValue,
     setUrlFilterValue,
     setUserFilterValue,
-    setFilteredActionsList,
+    setActionsList,
 } = auditOfActionsSlice.actions;
 
 export const selectAuditOfActions = (state: RootState) => state.auditOfActions;

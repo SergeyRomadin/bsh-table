@@ -63,7 +63,9 @@ export const sortedRows = (
         page * rowsPerPage + rowsPerPage
     );
 
-export function filteredActionsList(state: IAuditOfActionsState): TMockData[] {
+export function filteredActionsList(
+    state: IAuditOfActionsState
+): TMockData[] | null {
     const {
         urlFilterValue,
         userFilterValue,
@@ -72,6 +74,8 @@ export function filteredActionsList(state: IAuditOfActionsState): TMockData[] {
         statusFilterValue,
         actionsList,
     } = state;
+
+    if (!actionsList || actionsList.length === 0) return null;
 
     return actionsList.filter((item) => {
         const search = (el: TMockData) => {
