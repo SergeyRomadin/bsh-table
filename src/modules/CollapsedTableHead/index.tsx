@@ -25,7 +25,7 @@ export default function CollapsedTableHead(props: ICollapsedTableProps) {
                         onRequestSort={onRequestSort}
                     />
                 ))}
-                <TableCell></TableCell>
+                <TableCell sx={{ border: 0 }}></TableCell>
             </TableRowBase>
         </TableHead>
     );

@@ -1,4 +1,6 @@
-import { TOrder, TKeyofMockData, TMockData } from "./types";
+import { RootState } from "../app/store";
+import { IAuditOfActionsState } from "../features/Redux/auditOfActionsSlice";
+import { TOrder, TKeyofMockData, TMockData, IStateType } from "./types";
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -60,3 +62,52 @@ export const sortedRows = (
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
+
+export function filteredActionsList(state: IAuditOfActionsState): TMockData[] {
+    const {
+        urlFilterValue,
+        userFilterValue,
+        methodFilterValue,
+        searchFilterValue,
+        statusFilterValue,
+        actionsList,
+    } = state;
+
+    return actionsList.filter((item) => {
+        const search = (el: TMockData) => {
+            let key: TKeyofMockData;
+            for (key in el) {
+                if (
+                    el[key]
+                        .toString()
+                        .toLowerCase()
+                        .includes(searchFilterValue.toString().toLowerCase())
+                ) {
+                    return true;
+                }
+            }
+        };
+
+        if (urlFilterValue && urlFilterValue !== item.url) {
+            return false;
+        }
+
+        if (userFilterValue && userFilterValue !== item.user) {
+            return false;
+        }
+
+        if (methodFilterValue && methodFilterValue !== item.method) {
+            return false;
+        }
+
+        if (statusFilterValue && statusFilterValue !== item.status) {
+            return false;
+        }
+
+        if (searchFilterValue && !search(item)) {
+            return false;
+        }
+
+        return true;
+    });
+}

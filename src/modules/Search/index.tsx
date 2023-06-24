@@ -1,7 +1,9 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { setSearchFilterValue } from "../../features/Redux/auditOfActionsSlice";
 
 const SearchContainer = styled("div")(({ theme }) => ({
     position: "relative",
@@ -48,12 +50,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // },
 }));
 
-export default function Search() {
+export default function Search(props: any) {
+    const [value, setValue] = useState("");
+    const dispatch = useAppDispatch();
+
     return (
         <SearchContainer>
             <StyledInputBase
                 placeholder="Search"
                 inputProps={{ "aria-label": "search" }}
+                value={value}
+                onChange={(e) => {
+                    const value = e.target.value;
+                    dispatch(setSearchFilterValue(value));
+                    setValue(value);
+                }}
             />
             <SearchIconWrapper>
                 <SearchIcon />

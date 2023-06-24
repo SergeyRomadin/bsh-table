@@ -30,28 +30,3 @@ export default function DateRangePickerValue() {
         </LocalizationProvider>
     );
 }
-
-// const flFn = (items, filters) => {
-//     return items.filter((item) => {
-//         if (filters.URL && filters.URL !== item.URL) {
-//             return false;
-//         }
-
-//         if (filters.name && filters.name !== item.name) {
-//             return false;
-//         }
-
-//         if (filters.name && filters.name !== item.name) {
-//             return false;
-//         }
-
-//         if (filters.search && qwe) {
-//             retuern fasle
-//         }
-
-//         return true;
-//     });
-// };
-// const qwe = () =>  Object.values(item).some((vlaue) => {
-//     retrun vlaue.toLoverCase().includes(filters.search.toLoverCase());
-//  })

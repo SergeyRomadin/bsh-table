@@ -7,6 +7,13 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { ROWS } from "../../utils/constants";
 import { TMockData } from "../../utils/types";
 import DateRangePickerValue from "../DataRangePicker";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import {
+    setMethodFilterValue,
+    setStatusFilterValue,
+    setUrlFilterValue,
+    setUserFilterValue,
+} from "../../features/Redux/auditOfActionsSlice";
 
 const styleSX = {
     formControl: { maxWidth: "348px", pb: "12px" },
@@ -17,7 +24,7 @@ export default function FilterList() {
     const [user, setUser] = useState("");
     const [method, setMethod] = useState("");
     const [status, setStatus] = useState("");
-
+    const dispatch = useAppDispatch();
     const handleChange = (event: SelectChangeEvent, setState: any) => {
         setState(event.target.value as string);
     };
@@ -86,7 +93,10 @@ export default function FilterList() {
                         id="fiter-select-url"
                         value={url}
                         label="URL"
-                        onChange={(e) => handleChange(e, setUrl)}
+                        onChange={(e) => {
+                            handleChange(e, setUrl);
+                            dispatch(setUrlFilterValue(e.target.value));
+                        }}
                     >
                         {renderOptions(urlOptions)}
                     </Select>
@@ -98,7 +108,10 @@ export default function FilterList() {
                         id="fiter-select-user"
                         value={user}
                         label="User"
-                        onChange={(e) => handleChange(e, setUser)}
+                        onChange={(e) => {
+                            handleChange(e, setUser);
+                            dispatch(setUserFilterValue(e.target.value));
+                        }}
                     >
                         {renderOptions(userOptions)}
                     </Select>
@@ -110,7 +123,10 @@ export default function FilterList() {
                         id="fiter-select-method"
                         value={method}
                         label="Method"
-                        onChange={(e) => handleChange(e, setMethod)}
+                        onChange={(e) => {
+                            handleChange(e, setMethod);
+                            dispatch(setMethodFilterValue(e.target.value));
+                        }}
                     >
                         {renderOptions(methodOptions)}
                     </Select>
@@ -122,7 +138,10 @@ export default function FilterList() {
                         id="fiter-select-status"
                         value={status}
                         label="Status"
-                        onChange={(e) => handleChange(e, setStatus)}
+                        onChange={(e) => {
+                            handleChange(e, setStatus);
+                            dispatch(setStatusFilterValue(e.target.value));
+                        }}
                     >
                         {renderOptions(statusOptions)}
                     </Select>
@@ -134,9 +153,6 @@ export default function FilterList() {
                     minWidth: 120,
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                    // display: "flex",
-                    // justifyContent: "space-between",
-                    // flexWrap: "wrap",
                 }}
             >
                 <DateRangePickerValue />

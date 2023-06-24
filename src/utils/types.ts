@@ -18,3 +18,13 @@ export interface ICollapsedTableProps {
     order: TOrder;
     orderBy: string;
 }
+
+export interface IStateType {
+    actionsList: TMockData[];
+    searchFilterValue: string;
+    urlFilterValue: string;
+    userFilterValue: string;
+    methodFilterValue: string;
+    statusFilterValue: number;
+    filteredActionsList: [];
+}
