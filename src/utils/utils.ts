@@ -1,6 +1,7 @@
 import { RootState } from "../app/store";
 import { IAuditOfActionsState } from "../features/Redux/auditOfActionsSlice";
 import { TOrder, TKeyofMockData, TMockData, IStateType } from "./types";
+import dayjs, { Dayjs } from "dayjs";
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -72,6 +73,8 @@ export function filteredActionsList(
         methodFilterValue,
         searchFilterValue,
         statusFilterValue,
+        startDateFilterValue,
+        endDateFilterValue,
         actionsList,
     } = state;
 
@@ -92,6 +95,13 @@ export function filteredActionsList(
             }
         };
 
+        function parseStringToDate(datetime: string) {
+            const tmp = datetime.split(" ");
+            const date = tmp[0].split(".");
+            const time = tmp[1].split(":");
+            // const result = dayjs(date[2], date[1], date[0]);
+        }
+
         if (urlFilterValue && urlFilterValue !== item.url) {
             return false;
         }
@@ -106,6 +116,15 @@ export function filteredActionsList(
 
         if (statusFilterValue && statusFilterValue !== item.status) {
             return false;
+        }
+
+        if (startDateFilterValue) {
+            if (startDateFilterValue - dayjs(item.time).unix() > 0)
+                return false;
+        }
+
+        if (endDateFilterValue) {
+            if (endDateFilterValue - dayjs(item.time).unix() < 0) return false;
         }
 
         if (searchFilterValue && !search(item)) {

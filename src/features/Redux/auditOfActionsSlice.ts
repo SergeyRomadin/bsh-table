@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../app/store";
 import { TKeyofMockData, TMockData } from "../../utils/types";
 import { ROWS } from "../../utils/constants";
+import dayjs, { Dayjs } from "dayjs";
 
 export interface IAuditOfActionsState {
     actionsList: TMockData[];
@@ -10,6 +11,8 @@ export interface IAuditOfActionsState {
     userFilterValue: string;
     methodFilterValue: string;
     statusFilterValue: number;
+    startDateFilterValue: number | null;
+    endDateFilterValue: number | null;
     filteredActionsList: TMockData[];
 }
 
@@ -20,6 +23,8 @@ const initialState: IAuditOfActionsState = {
     userFilterValue: "",
     methodFilterValue: "",
     statusFilterValue: 0,
+    startDateFilterValue: null,
+    endDateFilterValue: null,
     filteredActionsList: [],
 };
 
@@ -51,6 +56,14 @@ export const auditOfActionsSlice = createSlice({
         setStatusFilterValue: (state, action) => {
             state.statusFilterValue = action.payload;
         },
+
+        setStartDateFilterValue: (state, action) => {
+            state.startDateFilterValue = action.payload;
+        },
+
+        setEndDateFilterValue: (state, action) => {
+            state.endDateFilterValue = action.payload;
+        },
     },
 });
 
@@ -61,6 +74,8 @@ export const {
     setUrlFilterValue,
     setUserFilterValue,
     setActionsList,
+    setEndDateFilterValue,
+    setStartDateFilterValue,
 } = auditOfActionsSlice.actions;
 
 export const selectAuditOfActions = (state: RootState) => state.auditOfActions;

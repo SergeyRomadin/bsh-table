@@ -14,9 +14,7 @@ const root = createRoot(container);
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            {/* <EnhancedTable></EnhancedTable> */}
             <CollapsibleTable></CollapsibleTable>
-            {/* <App /> */}
         </Provider>
     </React.StrictMode>
 );

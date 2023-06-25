@@ -59,11 +59,16 @@ export default function FilterList() {
     );
 
     function renderOptions(arr: string[]) {
+        let key = 0;
         return arr.map((option: string) => {
-            return <MenuItem value={option}>{option}</MenuItem>;
+            key++;
+            return (
+                <MenuItem key={key} value={option}>
+                    {option}
+                </MenuItem>
+            );
         });
     }
-    console.log(urlOptions);
 
     return (
         <Box
@@ -98,6 +103,7 @@ export default function FilterList() {
                             dispatch(setUrlFilterValue(e.target.value));
                         }}
                     >
+                        <MenuItem value={""}>All</MenuItem>
                         {renderOptions(urlOptions)}
                     </Select>
                 </FormControl>
@@ -113,6 +119,7 @@ export default function FilterList() {
                             dispatch(setUserFilterValue(e.target.value));
                         }}
                     >
+                        <MenuItem value={""}>All</MenuItem>
                         {renderOptions(userOptions)}
                     </Select>
                 </FormControl>
@@ -128,6 +135,7 @@ export default function FilterList() {
                             dispatch(setMethodFilterValue(e.target.value));
                         }}
                     >
+                        <MenuItem value={""}>All</MenuItem>
                         {renderOptions(methodOptions)}
                     </Select>
                 </FormControl>
@@ -143,6 +151,7 @@ export default function FilterList() {
                             dispatch(setStatusFilterValue(e.target.value));
                         }}
                     >
+                        <MenuItem value={""}>All</MenuItem>
                         {renderOptions(statusOptions)}
                     </Select>
                 </FormControl>

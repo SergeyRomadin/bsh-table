@@ -39,11 +39,12 @@ export default function CollapsibleTable() {
         methodFilterValue,
         searchFilterValue,
         statusFilterValue,
+        startDateFilterValue,
+        endDateFilterValue,
         actionsList,
     } = auditOfActionsState;
 
     useEffect(() => {
-        console.log(data);
         dispatch(setActionsList(data));
     }, [data]);
 
@@ -58,6 +59,8 @@ export default function CollapsibleTable() {
         methodFilterValue,
         searchFilterValue,
         statusFilterValue,
+        startDateFilterValue,
+        endDateFilterValue,
         actionsList,
     ]);
 
@@ -66,7 +69,7 @@ export default function CollapsibleTable() {
             return null;
         }
         return sortedRows(filteredRows, order, orderBy, page, rowsPerPage);
-    }, [filteredRows, order, orderBy, page, rowsPerPage, actionsList]);
+    }, [filteredRows, order, orderBy, page, rowsPerPage]);
 
     return (
         <TableContainer
