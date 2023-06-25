@@ -1,10 +1,9 @@
-import React, { ReactElement, useState } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { ROWS } from "../../utils/constants";
 import { TActionInfo } from "../../utils/types";
 import DateRangePickerValue from "../DataRangePicker";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
@@ -15,7 +14,6 @@ import {
     setUserFilterValue,
     selectAuditOfActions,
 } from "../../Redux/auditOfActionsSlice";
-import { useSelector } from "react-redux";
 
 const styleSX = {
     formControl: { maxWidth: "348px", pb: "12px" },
@@ -27,7 +25,8 @@ export default function FilterList() {
         userFilterValue,
         methodFilterValue,
         statusFilterValue,
-    } = useSelector(selectAuditOfActions);
+        actionsList,
+    } = useAppSelector(selectAuditOfActions);
     const dispatch = useAppDispatch();
 
     const handleChange = (event: SelectChangeEvent, setState: any) => {
@@ -36,29 +35,29 @@ export default function FilterList() {
 
     const urlOptions: string[] = Array.from(
         new Set(
-            ROWS.map((row: TActionInfo) => {
+            actionsList.map((row: TActionInfo) => {
                 return row.url;
             })
         )
     );
     const userOptions: string[] = Array.from(
         new Set(
-            ROWS.map((row: TActionInfo) => {
+            actionsList.map((row: TActionInfo) => {
                 return row.user;
             })
         )
     );
     const methodOptions: string[] = Array.from(
         new Set(
-            ROWS.map((row: TActionInfo) => {
+            actionsList.map((row: TActionInfo) => {
                 return row.method;
             })
         )
     );
     const statusOptions: string[] = Array.from(
         new Set(
-            ROWS.map((row: TActionInfo) => {
-                return row.status;
+            actionsList.map((row: TActionInfo) => {
+                return row.status.toString();
             })
         )
     );
@@ -91,9 +90,6 @@ export default function FilterList() {
                     minWidth: 120,
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                    // display: "flex",
-                    // justifyContent: "space-between",
-                    // flexWrap: "wrap",
                 }}
             >
                 <FormControl fullWidth sx={styleSX.formControl}>

@@ -1,8 +1,4 @@
-import React, { memo, useCallback, useEffect } from "react";
-import { ICollapsedTableProps, TKeyOfActionInfo } from "../../utils/types";
-import { HEAD_CELLS } from "../../utils/constants";
-import TableHead from "@mui/material/TableHead";
-import TableRowBase from "@mui/material/TableRow";
+import React, { memo, useCallback } from "react";
 import TableCell from "@mui/material/TableCell";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Box from "@mui/material/Box";

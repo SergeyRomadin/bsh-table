@@ -7,6 +7,11 @@ export type TActionInfo = ReturnType<typeof createData>;
 
 export type TKeyOfActionInfo = keyof TActionInfo;
 
+export interface ISortParams {
+    order: TOrder;
+    orderBy: TKeyOfActionInfo;
+}
+
 export interface IHeadCell {
     disablePadding: boolean;
     id: TKeyOfActionInfo;

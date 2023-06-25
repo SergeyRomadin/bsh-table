@@ -1,12 +1,9 @@
-import React, { useCallback } from "react";
-import { ICollapsedTableProps, TKeyOfActionInfo } from "../../utils/types";
+import React from "react";
+import { ICollapsedTableProps } from "../../utils/types";
 import { HEAD_CELLS } from "../../utils/constants";
 import TableHead from "@mui/material/TableHead";
 import TableRowBase from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Box from "@mui/material/Box";
-import { visuallyHidden } from "@mui/utils";
 import HeadCell from "../HeadCell";
 
 export default function CollapsedTableHead(props: ICollapsedTableProps) {

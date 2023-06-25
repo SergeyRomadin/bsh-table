@@ -10,7 +10,7 @@ export interface IAuditOfActionsState {
     urlFilterValue: string;
     userFilterValue: string;
     methodFilterValue: string;
-    statusFilterValue: number;
+    statusFilterValue: number | string;
     startDateFilterValue: number | null;
     endDateFilterValue: number | null;
     filteredActionsList: TActionInfo[];
@@ -22,7 +22,7 @@ const initialState: IAuditOfActionsState = {
     urlFilterValue: "",
     userFilterValue: "",
     methodFilterValue: "",
-    statusFilterValue: 0,
+    statusFilterValue: "",
     startDateFilterValue: null,
     endDateFilterValue: null,
     filteredActionsList: [],

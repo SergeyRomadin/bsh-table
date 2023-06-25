@@ -1,19 +1,10 @@
-import * as React from "react";
+import React from "react";
 import TableRowBase from "@mui/material/TableRow";
-import TableBase from "@mui/material/Table";
 import TableCellBase from "@mui/material/TableCell";
 
 import { styled } from "@mui/material/styles";
 
-export const Table = styled(TableBase)(() => ({
-    borderSpacing: "0 8px",
-    borderCollapse: "separate",
-    padding: "24px",
-    fontFamily: "Inter",
-    boxSizing: "border-box",
-}));
-
-export const TableRow = styled(TableRowBase)(() => ({
+export const TableRow = styled(TableRowBase)<any>(() => ({
     borderRadius: "20px",
     backgroundColor: "#eeeef9",
     fontFamily: "Inter",
@@ -30,7 +21,7 @@ export const TableRow = styled(TableRowBase)(() => ({
     },
 }));
 
-export const TableCell = styled(TableCellBase)(() => ({
+export const TableCell = styled(TableCellBase)<any>(() => ({
     fontFamily: "Inter",
     border: "none",
     padding: "0 16px",

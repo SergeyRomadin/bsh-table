@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
-import { Table } from "../../styledComponents";
+import { Table } from "./styledComponents";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import { sortedRows, filteredActionsList } from "../../utils/utils";
-import { TOrder, TKeyOfActionInfo, TActionInfo } from "../../utils/types";
+import { TKeyOfActionInfo, TActionInfo, ISortParams } from "../../utils/types";
 import CollapsedTableHead from "../CollapsedTableHead";
 import Row from "../CollapsedTableRow";
 import CollapsedToolbar from "../CollapsedToolbar";
@@ -13,25 +13,29 @@ import {
     selectAuditOfActions,
     setActionsList,
 } from "../../Redux/auditOfActionsSlice";
-import { useSelector } from "react-redux";
 import { actionsApi } from "../../Redux/services/actionsApi";
 
 export default function CollapsibleTable() {
-    const [order, setOrder] = useState<TOrder>("asc");
-    const [orderBy, setOrderBy] = useState<TKeyOfActionInfo>("time");
+    const [sort, setSort] = useState<ISortParams>({
+        order: "asc",
+        orderBy: "time",
+    });
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const handleRequestSort = useCallback(
         (property: TKeyOfActionInfo) => {
-            const isAsc = orderBy === property && order === "asc";
-            setOrder(isAsc ? "desc" : "asc");
-            setOrderBy(property);
+            const isAsc = sort.orderBy === property && sort.order === "asc";
+            setSort(
+                isAsc
+                    ? { order: "desc", orderBy: property }
+                    : { order: "asc", orderBy: property }
+            );
         },
-        [orderBy, order]
+        [sort]
     );
     const { data } = actionsApi.useFetchActionsListQuery("");
     const dispatch = useAppDispatch();
-    const auditOfActionsState = useSelector(selectAuditOfActions);
+    const auditOfActionsState = useAppSelector(selectAuditOfActions);
     const {
         urlFilterValue,
         userFilterValue,
@@ -65,10 +69,16 @@ export default function CollapsibleTable() {
 
     const visibleRows: Array<TActionInfo> | null = React.useMemo(() => {
         if (!filteredRows || filteredRows.length === 0) {
-            return null;
+            return [];
         }
-        return sortedRows(filteredRows, order, orderBy, page, rowsPerPage);
-    }, [filteredRows, order, orderBy, page, rowsPerPage]);
+        return sortedRows(
+            filteredRows,
+            sort.order,
+            sort.orderBy,
+            page,
+            rowsPerPage
+        );
+    }, [filteredRows, sort, page, rowsPerPage]);
 
     return (
         <TableContainer
@@ -78,15 +88,14 @@ export default function CollapsibleTable() {
             <CollapsedToolbar />
             <Table aria-label="collapsible table">
                 <CollapsedTableHead
-                    order={order}
-                    orderBy={orderBy}
+                    order={sort.order}
+                    orderBy={sort.orderBy}
                     onRequestSort={handleRequestSort}
                 />
                 <TableBody>
-                    {visibleRows &&
-                        visibleRows.map((row, index) => {
-                            return <Row key={index} row={row} />;
-                        })}
+                    {visibleRows.map((row, index) => {
+                        return <Row key={index} row={row} />;
+                    })}
                 </TableBody>
             </Table>
         </TableContainer>

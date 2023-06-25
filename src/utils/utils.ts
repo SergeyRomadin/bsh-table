@@ -64,6 +64,20 @@ export const sortedRows = (
         page * rowsPerPage + rowsPerPage
     );
 
+const search = (el: TActionInfo, searchFilterValue: string) => {
+    let key: TKeyOfActionInfo;
+    for (key in el) {
+        if (
+            el[key]
+                .toString()
+                .toLowerCase()
+                .includes(searchFilterValue.toString().toLowerCase())
+        ) {
+            return true;
+        }
+    }
+};
+
 export function filteredActionsList(
     state: IAuditOfActionsState
 ): TActionInfo[] | null {
@@ -81,27 +95,6 @@ export function filteredActionsList(
     if (!actionsList || actionsList.length === 0) return null;
 
     return actionsList.filter((item) => {
-        const search = (el: TActionInfo) => {
-            let key: TKeyOfActionInfo;
-            for (key in el) {
-                if (
-                    el[key]
-                        .toString()
-                        .toLowerCase()
-                        .includes(searchFilterValue.toString().toLowerCase())
-                ) {
-                    return true;
-                }
-            }
-        };
-
-        function parseStringToDate(datetime: string) {
-            const tmp = datetime.split(" ");
-            const date = tmp[0].split(".");
-            const time = tmp[1].split(":");
-            // const result = dayjs(date[2], date[1], date[0]);
-        }
-
         if (urlFilterValue && urlFilterValue !== item.url) {
             return false;
         }
@@ -114,7 +107,7 @@ export function filteredActionsList(
             return false;
         }
 
-        if (statusFilterValue && statusFilterValue !== item.status) {
+        if (statusFilterValue && statusFilterValue != item.status) {
             return false;
         }
 
@@ -127,7 +120,7 @@ export function filteredActionsList(
             if (endDateFilterValue - dayjs(item.time).unix() < 0) return false;
         }
 
-        if (searchFilterValue && !search(item)) {
+        if (searchFilterValue && !search(item, searchFilterValue)) {
             return false;
         }
 
