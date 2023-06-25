@@ -10,6 +10,9 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Search from "../Search";
 import RefreshIconBtn from "../RefreshIconBtn";
 import FilterList from "../FilterList";
+import { actionsApi } from "../../features/Redux/services/actionsApi";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { setActionsList } from "../../features/Redux/auditOfActionsSlice";
 
 interface EnhancedTableToolbarProps {
     numSelected: number;
@@ -25,6 +28,12 @@ const styleSX = {
 
 export default function CollapsedToolbar(props: EnhancedTableToolbarProps) {
     const [openFilterList, setOpenFilterList] = useState(false);
+    const dispatch = useAppDispatch();
+    const { data, refetch } = actionsApi.useFetchActionsListQuery("");
+    function handleRefresh() {
+        refetch();
+        dispatch(setActionsList(data));
+    }
 
     return (
         <Box
@@ -38,7 +47,7 @@ export default function CollapsedToolbar(props: EnhancedTableToolbarProps) {
                     maxWidth: "100%",
                 }}
             >
-                <RefreshIconBtn />
+                <RefreshIconBtn handleRefresh={handleRefresh} />
                 <Typography
                     sx={{
                         flex: "1 1 100%",
@@ -55,6 +64,7 @@ export default function CollapsedToolbar(props: EnhancedTableToolbarProps) {
                 <IconButton
                     sx={{
                         backgroundColor: "#3858B6",
+                        ml: "24px",
                         "&:hover": {
                             backgroundColor: "#3858B6",
                             opacity: 0.8,

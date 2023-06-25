@@ -5,7 +5,6 @@ import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import { sortedRows, filteredActionsList } from "../../utils/utils";
 import { TOrder, TKeyofMockData, TMockData } from "../../utils/types";
-import { ROWS } from "../../utils/constants";
 import CollapsedTableHead from "../CollapsedTableHead";
 import Row from "../CollapsedTableRow";
 import CollapsedToolbar from "../CollapsedToolbar";

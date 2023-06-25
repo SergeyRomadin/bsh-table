@@ -9,9 +9,9 @@ const styleSX = {
 };
 
 export default function RefreshIconBtn(props: any) {
-    const { handlerRefresh } = props;
+    const { handleRefresh } = props;
     return (
-        <IconButton sx={{ padding: "4px" }} onClick={handlerRefresh}>
+        <IconButton sx={{ padding: "4px" }} onClick={handleRefresh}>
             <RefreshIcon sx={styleSX} />
         </IconButton>
     );
