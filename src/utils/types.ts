@@ -1,30 +1,26 @@
+import { IAuditOfActionsState } from "../Redux/auditOfActionsSlice";
 import { createData } from "../mock/utils";
 
 export type TOrder = "asc" | "desc";
 
-export type TMockData = ReturnType<typeof createData>;
+export type TActionInfo = ReturnType<typeof createData>;
 
-export type TKeyofMockData = keyof TMockData;
+export type TKeyOfActionInfo = keyof TActionInfo;
 
 export interface IHeadCell {
     disablePadding: boolean;
-    id: TKeyofMockData;
+    id: TKeyOfActionInfo;
     label: string;
     numeric: boolean;
 }
 
 export interface ICollapsedTableProps {
-    onRequestSort: (property: TKeyofMockData) => void;
+    onRequestSort: (property: TKeyOfActionInfo) => void;
     order: TOrder;
     orderBy: string;
 }
 
-export interface IStateType {
-    actionsList: TMockData[];
-    searchFilterValue: string;
-    urlFilterValue: string;
-    userFilterValue: string;
-    methodFilterValue: string;
-    statusFilterValue: number;
-    filteredActionsList: [];
+export interface IPayload {
+    name: keyof IAuditOfActionsState;
+    value: any;
 }

@@ -2,7 +2,6 @@ import * as React from "react";
 import TableRowBase from "@mui/material/TableRow";
 import TableBase from "@mui/material/Table";
 import TableCellBase from "@mui/material/TableCell";
-import TypographyBase from "@mui/material/Typography";
 
 import { styled } from "@mui/material/styles";
 
@@ -37,8 +36,4 @@ export const TableCell = styled(TableCellBase)<any>(() => ({
     padding: "0 16px",
     verticalAlign: "top",
     boxSizing: "border-box",
-}));
-
-export const Typography = styled(TypographyBase)<any>(() => ({
-    fontFamily: "Inter",
 }));

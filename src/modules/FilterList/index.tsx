@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { ROWS } from "../../utils/constants";
-import { TMockData } from "../../utils/types";
+import { TActionInfo } from "../../utils/types";
 import DateRangePickerValue from "../DataRangePicker";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
@@ -13,46 +13,51 @@ import {
     setStatusFilterValue,
     setUrlFilterValue,
     setUserFilterValue,
-} from "../../features/Redux/auditOfActionsSlice";
+    selectAuditOfActions,
+} from "../../Redux/auditOfActionsSlice";
+import { useSelector } from "react-redux";
 
 const styleSX = {
     formControl: { maxWidth: "348px", pb: "12px" },
 };
 
 export default function FilterList() {
-    const [url, setUrl] = useState("");
-    const [user, setUser] = useState("");
-    const [method, setMethod] = useState("");
-    const [status, setStatus] = useState("");
+    const {
+        urlFilterValue,
+        userFilterValue,
+        methodFilterValue,
+        statusFilterValue,
+    } = useSelector(selectAuditOfActions);
     const dispatch = useAppDispatch();
+
     const handleChange = (event: SelectChangeEvent, setState: any) => {
         setState(event.target.value as string);
     };
 
     const urlOptions: string[] = Array.from(
         new Set(
-            ROWS.map((row: TMockData) => {
+            ROWS.map((row: TActionInfo) => {
                 return row.url;
             })
         )
     );
     const userOptions: string[] = Array.from(
         new Set(
-            ROWS.map((row: TMockData) => {
+            ROWS.map((row: TActionInfo) => {
                 return row.user;
             })
         )
     );
     const methodOptions: string[] = Array.from(
         new Set(
-            ROWS.map((row: TMockData) => {
+            ROWS.map((row: TActionInfo) => {
                 return row.method;
             })
         )
     );
     const statusOptions: string[] = Array.from(
         new Set(
-            ROWS.map((row: TMockData) => {
+            ROWS.map((row: TActionInfo) => {
                 return row.status;
             })
         )
@@ -96,10 +101,9 @@ export default function FilterList() {
                     <Select
                         labelId="fiter-select-url"
                         id="fiter-select-url"
-                        value={url}
+                        value={urlFilterValue}
                         label="URL"
                         onChange={(e) => {
-                            handleChange(e, setUrl);
                             dispatch(setUrlFilterValue(e.target.value));
                         }}
                     >
@@ -112,10 +116,9 @@ export default function FilterList() {
                     <Select
                         labelId="fiter-select-user"
                         id="fiter-select-user"
-                        value={user}
+                        value={userFilterValue}
                         label="User"
                         onChange={(e) => {
-                            handleChange(e, setUser);
                             dispatch(setUserFilterValue(e.target.value));
                         }}
                     >
@@ -128,10 +131,9 @@ export default function FilterList() {
                     <Select
                         labelId="fiter-select-method"
                         id="fiter-select-method"
-                        value={method}
+                        value={methodFilterValue}
                         label="Method"
                         onChange={(e) => {
-                            handleChange(e, setMethod);
                             dispatch(setMethodFilterValue(e.target.value));
                         }}
                     >
@@ -144,10 +146,9 @@ export default function FilterList() {
                     <Select
                         labelId="fiter-select-status"
                         id="fiter-select-status"
-                        value={status}
+                        value={statusFilterValue}
                         label="Status"
                         onChange={(e) => {
-                            handleChange(e, setStatus);
                             dispatch(setStatusFilterValue(e.target.value));
                         }}
                     >

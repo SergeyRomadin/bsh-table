@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../../app/store";
-import { TKeyofMockData, TMockData } from "../../utils/types";
-import { ROWS } from "../../utils/constants";
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "./store";
+import { TKeyOfActionInfo, TActionInfo } from "../utils/types";
+import { IPayload } from "../utils/types";
 import dayjs, { Dayjs } from "dayjs";
 
 export interface IAuditOfActionsState {
-    actionsList: TMockData[];
+    actionsList: TActionInfo[];
     searchFilterValue: string;
     urlFilterValue: string;
     userFilterValue: string;
@@ -13,7 +13,7 @@ export interface IAuditOfActionsState {
     statusFilterValue: number;
     startDateFilterValue: number | null;
     endDateFilterValue: number | null;
-    filteredActionsList: TMockData[];
+    filteredActionsList: TActionInfo[];
 }
 
 const initialState: IAuditOfActionsState = {
@@ -31,8 +31,12 @@ const initialState: IAuditOfActionsState = {
 export const auditOfActionsSlice = createSlice({
     name: "auditOfActions",
     initialState,
-    // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
+        // setValue: (state, action) => {
+        //     const payload: IPayload = action.payload;
+        //     state[payload.name] = action.payload.value;
+        // },
+
         setActionsList: (state, action) => {
             state.actionsList = action.payload;
         },

@@ -9,9 +9,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import StatusCode from "../StatusCode";
 import TelegramIconLink from "../TelegramIconLink";
 import CopyIconBtn from "../CopyIconBtn";
-import { TMockData } from "../../utils/types";
+import { TActionInfo } from "../../utils/types";
 
-export default function CollapsedTableRow(props: { row: TMockData }) {
+export default function CollapsedTableRow(props: { row: TActionInfo }) {
     const { row } = props;
     const [open, setOpen] = useState(false);
 

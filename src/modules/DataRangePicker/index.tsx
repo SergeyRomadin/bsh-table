@@ -8,10 +8,12 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
     setStartDateFilterValue,
     setEndDateFilterValue,
-} from "../../features/Redux/auditOfActionsSlice";
+} from "../../Redux/auditOfActionsSlice";
 
 const styleSX = {
-    formControl: { width: "100%", maxWidth: "348px", pb: "12px" },
+    width: "100%",
+    maxWidth: "348px",
+    pb: "12px",
 };
 
 export default function DateRangePickerValue() {
@@ -19,14 +21,10 @@ export default function DateRangePickerValue() {
     const [endDate, setEndDate] = React.useState<Dayjs | null>(null);
     const dispatch = useAppDispatch();
 
-    React.useEffect(() => {
-        dispatch(setStartDateFilterValue(startDate?.unix()));
-    }, [startDate]);
-
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-                sx={styleSX.formControl}
+                sx={styleSX}
                 label="Start date"
                 value={startDate}
                 onChange={(newValue) => {
@@ -35,7 +33,7 @@ export default function DateRangePickerValue() {
                 }}
             />
             <DatePicker
-                sx={styleSX.formControl}
+                sx={styleSX}
                 label="End date"
                 value={endDate}
                 onChange={(newValue) => {

@@ -1,11 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
-import App from "./App";
+import { store } from "./Redux/store";
 import "./index.css";
 import "@fontsource/inter";
-import EnhancedTable from "./EnhancedTable";
 import CollapsibleTable from "./modules/CollapsibleTable";
 
 const container = document.getElementById("root")!;

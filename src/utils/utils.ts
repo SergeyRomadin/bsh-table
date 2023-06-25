@@ -1,6 +1,6 @@
-import { RootState } from "../app/store";
-import { IAuditOfActionsState } from "../features/Redux/auditOfActionsSlice";
-import { TOrder, TKeyofMockData, TMockData, IStateType } from "./types";
+import { RootState } from "../Redux/store";
+import { IAuditOfActionsState } from "../Redux/auditOfActionsSlice";
+import { TOrder, TKeyOfActionInfo, TActionInfo } from "./types";
 import dayjs, { Dayjs } from "dayjs";
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -53,12 +53,12 @@ export const visibleRows = (
     );
 
 export const sortedRows = (
-    rows: TMockData[],
+    rows: TActionInfo[],
     order: TOrder,
-    orderBy: TKeyofMockData,
+    orderBy: TKeyOfActionInfo,
     page: number,
     rowsPerPage: number
-): TMockData[] =>
+): TActionInfo[] =>
     stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
@@ -66,7 +66,7 @@ export const sortedRows = (
 
 export function filteredActionsList(
     state: IAuditOfActionsState
-): TMockData[] | null {
+): TActionInfo[] | null {
     const {
         urlFilterValue,
         userFilterValue,
@@ -81,8 +81,8 @@ export function filteredActionsList(
     if (!actionsList || actionsList.length === 0) return null;
 
     return actionsList.filter((item) => {
-        const search = (el: TMockData) => {
-            let key: TKeyofMockData;
+        const search = (el: TActionInfo) => {
+            let key: TKeyOfActionInfo;
             for (key in el) {
                 if (
                     el[key]

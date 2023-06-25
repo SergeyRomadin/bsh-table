@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import auditOfActionsReducer from "../features/Redux/auditOfActionsSlice";
-import { actionsApi } from "../features/Redux/services/actionsApi";
+import auditOfActionsReducer from "./auditOfActionsSlice";
+import { actionsApi } from "./services/actionsApi";
 
 export const store = configureStore({
     reducer: {

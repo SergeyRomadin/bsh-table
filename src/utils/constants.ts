@@ -1,4 +1,4 @@
-import { IHeadCell, TMockData } from "./types";
+import { IHeadCell, TActionInfo } from "./types";
 import { createData } from "../mock/utils";
 
 export const ROWS: any = [
